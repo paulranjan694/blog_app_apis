@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.*;
 
-@Entity
+@Entity(name="users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
