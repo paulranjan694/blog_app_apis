@@ -33,4 +33,16 @@ public class UserServiceImpl implements UserService{
         User createdUser = userRepositoryService.createUser(user);
         return createdUser;
     }
+
+    @Override
+    public User updateUser(String userId, User user) {
+        User updatedUser = userRepositoryService.updateUser(userId,user);
+        return user;
+    }
+
+    @Override
+    public String deleteUser(String userId) {
+        String result = userRepositoryService.deleteUser(userId);
+        return result;
+    }
 }

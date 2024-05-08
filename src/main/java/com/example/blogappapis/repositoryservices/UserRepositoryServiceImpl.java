@@ -27,6 +27,7 @@ public class UserRepositoryServiceImpl implements UserRepositoryService{
        List<UserEntity> userEntities = userRepository.findAll();
        List<User> users= new ArrayList<User>();
        ModelMapper  modelMapper = modelMapperProvider.get();
+
        for(UserEntity userEntity : userEntities){
            users.add(modelMapper.map(userEntity,User.class));
        }
@@ -43,12 +44,32 @@ public class UserRepositoryServiceImpl implements UserRepositoryService{
 
     @Override
     public User updateUser(String userId, User user) {
-        return null;
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(String.format("User with user id %s not found",userId)));
+
+        if(user.getEmail() != null){
+            userEntity.setEmail(user.getEmail());
+        }
+
+        if(user.getName() != null){
+            userEntity.setName(user.getName());
+        }
+
+        if(user.getAbout() != null){
+            userEntity.setAbout(user.getAbout());
+        }
+
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+        User updatedUser = modelMapperProvider.get().map(userEntity,User.class);
+
+        return updatedUser;
     }
 
     @Override
     public String deleteUser(String userId) {
-        return "";
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(String.format("User with user id %s not found",userId)));
+        userRepository.delete(userEntity);
+        return String.format("User deleted successfully with id - %s",userEntity.getId());
     }
 
     @Override

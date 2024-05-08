@@ -47,4 +47,22 @@ public class UserController {
         return new ResponseEntity<>(String.format("User Created Successfully, user id - %s",createdUser.getUserId()), HttpStatus.CREATED);
     }
 
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable String userId,@RequestBody User user){
+        if(user == null){
+            throw new BadRequestException("Bad Request");
+        }
+
+        User updatedUser = userService.updateUser(userId, user);
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userId){
+         String response = userService.deleteUser(userId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
