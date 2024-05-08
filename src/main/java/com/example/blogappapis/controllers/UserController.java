@@ -3,6 +3,7 @@ package com.example.blogappapis.controllers;
 import com.example.blogappapis.dto.User;
 import com.example.blogappapis.exceptions.BadRequestException;
 import com.example.blogappapis.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> createUser(@RequestBody User user){
+    public ResponseEntity<String> createUser(@Valid  @RequestBody User user){
         if(user == null){
             throw new BadRequestException("Bad Request");
         }
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable String userId,@RequestBody User user){
+    public ResponseEntity<User> updateUser(@PathVariable String userId, @Valid @RequestBody User user){
         if(user == null){
             throw new BadRequestException("Bad Request");
         }
